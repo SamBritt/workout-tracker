@@ -11,7 +11,7 @@ import Input from '@/components/Input.vue'
 
     <div class="flex flex-col">
       <Label for="weekly-mileage">Mileage this week</Label>
-      <Input name="weekly-mileage" />
+      <Input type="number" name="weekly-mileage" />
     </div>
     
     <div class="flex flex-col w-full">

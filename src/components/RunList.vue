@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col w-full border-2 border-slate-400 rounded-md px-4 py-2">
+  <div class="flex flex-col w-full bg-gray-200 rounded-md px-4 py-2 gap-2">
     <Heading>Run History</Heading>
 
     <div class="flex flex-col gap-4">

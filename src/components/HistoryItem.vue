@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex items-center justify-center bg-gray-200 h-8 w-full rounded-md gap-2 shadow-md">
+  <div class="flex items-center justify-center bg-gray-100 h-8 w-full rounded-md gap-2 shadow-md">
     <span class="bg-slate-700 h-full rounded-l-md flex items-center p-2 text-slate-100">
       Mon. Oct. 3rd:
     </span>

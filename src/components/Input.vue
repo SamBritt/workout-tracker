@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+
 const props = defineProps({
   type: {
     type: String,
@@ -7,7 +9,81 @@ const props = defineProps({
   name: {
     type: String,
     required: true
+  },
+  placeholder: {
+    type: String,
+    default: '00'
+  },
+  font: {
+    type: String,
+    default: null
   }
+})
+
+const value = ref()
+
+const onChange = (event: Event, type: string) => {
+  if (props.type === 'timer') {
+    const numericValue = (event.target as HTMLInputElement).value.replace(/[^0-9]/g, '')
+    if (Number(numericValue) < 0) {
+      value.value = 0
+    } else if (Number(numericValue) > 59) {
+      value.value = 59
+    } else if (Number(numericValue) < 10) {
+      value.value = `0${numericValue}`
+    } else if (numericValue.length >= 3) {
+      value.value = numericValue.slice(-2)
+      console.log(value.value)
+    }
+  }
+}
+
+const inputStyles = computed(() => {
+  const styles = [
+    `flex`,
+    `active:scale-105`,
+    `focus:outline-none`,
+    `text-center`,
+    `text-slate-700`,
+    `bg-gray-200`,
+    `rounded-sm`
+  ]
+
+  if (['number', 'timer'].includes(props.type)) {
+    styles.push('w-auto')
+  }
+
+  switch (props.font) {
+    case 'big':
+      styles.push('text-5xl')
+      break
+    case 'medium':
+      styles.push('text-3xl')
+      break
+  }
+
+  return styles
+})
+
+const inputProps = computed(() => {
+  let attrs = {}
+
+  switch (props.type) {
+    case 'number':
+      Object.assign(attrs, {
+        type: 'number',
+        min: '0',
+        max: '59'
+      })
+    case 'timer':
+      Object.assign(attrs, {
+        type: 'number',
+        min: '0',
+        max: '59'
+      })
+  }
+
+  return attrs
 })
 </script>
 
@@ -15,7 +91,9 @@ const props = defineProps({
   <input
     :id="`${name}-input`"
     :name="`${name}-input`"
-    :type="type"
-    placeholder="0"
-    class="text-slate-700 bg-gray-200 px-2 rounded-sm" />
+    v-model="value"
+    :class="inputStyles"
+    :placeholder="placeholder"
+    @input="(e) => onChange(e, 'hours')"
+    v-bind="inputProps" />
 </template>

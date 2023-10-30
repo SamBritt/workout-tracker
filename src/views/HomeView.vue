@@ -29,12 +29,11 @@ const dayName = computed(() => currentDate.value.toLocaleString(undefined, { wee
       </div>
 
       <div class="flex justify-center gap-2 w-1/2">
-   
-          <StatTile
+        <StatTile
           value="8"
           label="miles /wk"
           total="30" />
-       <StatTile
+        <StatTile
           value="25"
           label="miles /mo" />
 

@@ -43,10 +43,10 @@ const pace = computed(() => {
 })
 
 const clear = () => {
-  time.hours = '';
-  time.minutes = '';
-  time.seconds = '';
-  time.mileage = '';
+  time.hours = ''
+  time.minutes = ''
+  time.seconds = ''
+  time.mileage = ''
 }
 const save = () => {
   emit('save', time)
@@ -56,6 +56,7 @@ const save = () => {
 <template>
   <div class="flex flex-col bg-gray-200 w-full h-60 rounded-md shadow-lg px-8 py-4">
     <Heading>Quick Run</Heading>
+
     <div class="flex flex-col h-full">
       <div class="flex self-center h-1/2 justify-center items-center">
         <div class="flex flex-col text-center">

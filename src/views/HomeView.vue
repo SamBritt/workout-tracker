@@ -4,9 +4,18 @@ import StatTile from '@/components/StatTile.vue'
 import QuickRun from '@/components/QuickRun.vue'
 import AdvancedRun from '@/components/AdvancedRun.vue'
 import Goals from '@/components/Goals.vue'
+import WeeklyReport from '@/components/WeeklyReport.vue'
 import RunList from '@/components/RunList.vue'
 import { Line } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+} from 'chart.js'
 import 'chart.js/auto'
 // ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -20,8 +29,8 @@ const dayName = computed(() => currentDate.value.toLocaleString(undefined, { wee
 
 const chartData = computed(() => {
   return {
-    labels: [ 'January', 'February', 'March', 'April', 'May' ],
-    datasets: [ { data: [25, 28, 30, 28, 30, 34] } ]
+    labels: ['January', 'February', 'March', 'April', 'May'],
+    datasets: [{ data: [25, 28, 30, 28, 30, 34] }]
   }
 })
 const chartOptions = computed(() => {
@@ -33,17 +42,17 @@ const chartOptions = computed(() => {
       padding: 30
     },
     scales: {
-            x: {
-                grid: {
-                    display: false
-                }
-            },
-            y: {
-              grid: {
-                    display: false
-                }// Keep other y-axis options here if needed
-            }
+      x: {
+        grid: {
+          display: false
         }
+      },
+      y: {
+        grid: {
+          display: false
+        } // Keep other y-axis options here if needed
+      }
+    }
   }
 })
 
@@ -55,11 +64,10 @@ const chartStyles = computed(() => {
     display: 'flex'
   }
 })
-const addRun = (time) => {
+const addRun = (time: number) => {
   console.log('dd', time)
   workouts.value.push(time)
 }
-
 </script>
 
 <template>
@@ -76,12 +84,11 @@ const addRun = (time) => {
           </div>
         </div>
         <Line
-        class="flex w-full"
-        :style="chartStyles"
+          class="flex w-full"
+          :style="chartStyles"
           id="my-chart-id"
           :options="chartOptions"
-          :data="chartData"
-        />
+          :data="chartData" />
       </div>
 
       <div class="flex justify-center gap-2 w-1/2">
@@ -117,13 +124,16 @@ const addRun = (time) => {
       </div>
     </div>
 
+    <WeeklyReport/>
+
     <div class="flex flex-col sm:flex-row gap-6">
-      <QuickRun @save="addRun"/>
+      <QuickRun @save="addRun" />
       <AdvancedRun />
     </div>
+
     <div class="flex flex-col sm:flex-row gap-6">
       <Goals />
-      <RunList :list="workouts"/>
+      <RunList :list="workouts" />
     </div>
   </main>
 </template>

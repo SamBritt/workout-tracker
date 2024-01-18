@@ -15,14 +15,7 @@ const props = defineProps({
     <Heading>Run History</Heading>
 
     <div class="flex flex-col gap-4">
-      <HistoryItem />
-      <HistoryItem />
-      <HistoryItem />
-      <HistoryItem />
-      <HistoryItem />
-      <HistoryItem />
-      <HistoryItem />
-      <HistoryItem />
+      <HistoryItem v-for="item in list"/>
     </div>
   </div>
 </template>

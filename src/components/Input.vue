@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { emit } from 'process';
 import { computed, ref } from 'vue'
 
 const props = defineProps({
@@ -17,10 +18,20 @@ const props = defineProps({
   font: {
     type: String,
     default: null
-  }
+  },
+  modelValue: {}
 })
 
-const value = ref()
+const emit = defineEmits(['update:modelValue'])
+
+const value = computed({
+  get() {
+    return props.modelValue
+  },
+  set(value) {
+    emit('update:modelValue', value)
+  }
+})
 
 const onChange = (event: Event, type: string) => {
   if (props.type === 'timer') {
@@ -36,6 +47,8 @@ const onChange = (event: Event, type: string) => {
       console.log(value.value)
     }
   }
+
+  // emit('update:modelValue', value.value)
 }
 
 const inputStyles = computed(() => {
@@ -66,7 +79,9 @@ const inputStyles = computed(() => {
 })
 
 const inputProps = computed(() => {
-  let attrs = {}
+  let attrs = {
+    placeholder: props.placeholder
+  }
 
   switch (props.type) {
     case 'number':
@@ -93,7 +108,6 @@ const inputProps = computed(() => {
     :name="`${name}-input`"
     v-model="value"
     :class="inputStyles"
-    :placeholder="placeholder"
     @input="(e) => onChange(e, 'hours')"
     v-bind="inputProps" />
 </template>

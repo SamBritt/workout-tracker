@@ -5,8 +5,15 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'primary'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
+
+const emit = defineEmits(['click'])
+const click = () => emit('click')
 
 const buttonStyles = computed(() => {
   const styles = [
@@ -21,6 +28,10 @@ const buttonStyles = computed(() => {
 
   switch (props.variant) {
     case 'primary':
+      if (props.disabled) {
+        styles.push('bg-slate-600', 'cursor-not-allowed')
+        break
+      }
       styles.push('bg-slate-700', 'active:bg-slate-800')
       break
     case 'outline':
@@ -33,5 +44,5 @@ const buttonStyles = computed(() => {
 </script>
 
 <template>
-  <button :class="buttonStyles"><slot /></button>
+  <button :class="buttonStyles" @click="click" :disabled="disabled"><slot /></button>
 </template>

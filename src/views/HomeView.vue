@@ -73,8 +73,8 @@ const addRun = (time: number) => {
 <template>
   <main class="space-y-6">
     <!-- Chart -->
-    <div class="flex flex-col lg:flex-row gap-4">
-      <div class="relative bg-gray-200 w-full h-60 rounded-md p-4">
+    <div class="flex flex-row gap-6">
+      <div class="relative bg-gray-200 w-1/2 h-60 rounded-md p-4">
         <div class="text-center">
           <div class="text-2xl font-light text-slate-700">
             {{ dayName }}

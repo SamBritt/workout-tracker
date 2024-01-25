@@ -54,7 +54,7 @@ const save = () => {
 </script>
 
 <template>
-  <div class="flex flex-col bg-gray-200 w-full h-60 rounded-md shadow-lg px-8 py-4">
+  <div class="flex flex-col bg-slate-700 w-full h-60 rounded-md shadow-lg shadow-sky-800/25 hover:shadow-sky-800/50 transition-shadow ease-out px-8 py-4">
     <Heading>Quick Run</Heading>
 
     <div class="flex flex-col h-full">

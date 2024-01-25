@@ -72,11 +72,14 @@ const addRun = (time: number) => {
 
 <template>
   <main class="space-y-6">
+    <div>
+      <h1 class="text-8xl text-gray-200 text-center">Samuel Britt</h1>
+    </div>
     <!-- Chart -->
-    <div class="flex flex-row gap-6">
-      <div class="relative bg-gray-200 w-1/2 h-60 rounded-md p-4">
+    <div class="flex flex-col gap-6">
+      <div class="relative bg-slate-700 h-60 rounded-md p-4">
         <div class="text-center">
-          <div class="text-2xl font-light text-slate-700">
+          <div class="text-2xl font-light text-gray-300">
             {{ dayName }}
             {{ month }}
             {{ day }}
@@ -91,7 +94,7 @@ const addRun = (time: number) => {
           :data="chartData" />
       </div>
 
-      <div class="flex justify-center gap-2 w-1/2">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
         <StatTile
           value="8"
           label="miles /wk"
@@ -108,23 +111,10 @@ const addRun = (time: number) => {
           value="5"
           label="Days Off"
           total="7" />
-        <!-- <span class="flex items-end gap-1 text-zinc-300">
-          <span class="text-amber-300 text-xl">8</span>
-          of
-          <span class="text-amber-300 text-xl">30</span>
-          miles this week
-        </span>
-
-        <span class="flex items-end gap-1 text-zinc-300">
-          <span class="text-amber-300 text-xl">25</span>
-          of
-          <span class="text-amber-300 text-xl">120</span>
-          miles this month
-        </span> -->
       </div>
     </div>
 
-    <WeeklyReport/>
+    <WeeklyReport />
 
     <div class="flex flex-col sm:flex-row gap-6">
       <QuickRun @save="addRun" />

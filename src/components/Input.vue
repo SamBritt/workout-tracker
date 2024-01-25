@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { emit } from 'process';
 import { computed, ref } from 'vue'
 
 const props = defineProps({
@@ -54,11 +53,11 @@ const onChange = (event: Event, type: string) => {
 const inputStyles = computed(() => {
   const styles = [
     `flex`,
-    `active:scale-105`,
+    `active:scale-100`,
     `focus:outline-none`,
     `text-center`,
-    `text-slate-700`,
-    `bg-gray-200`,
+    `text-gray-300`,
+    `bg-transparent`,
     `rounded-sm`
   ]
 

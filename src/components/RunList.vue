@@ -15,7 +15,7 @@ const props = defineProps({
     <Heading>Run History</Heading>
 
     <div class="flex flex-col gap-4">
-      <HistoryItem v-for="item in list"/>
+      <HistoryItem v-for="workout in list" :workout="workout"/>
     </div>
   </div>
 </template>

@@ -13,8 +13,24 @@ const days = ref(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Satur
   <div class="text-gray-200">
     <Heading>Weekly Report</Heading>
 
-    <div class="flex relative gap-1 overflow-auto">
+    <div class="flex relative gap-1 overflow-auto scroll">
       <ReportTile v-for="(item, idx) of days" :label="days[idx]" :current="current" :id="idx"/>
     </div>
   </div>
 </template>
+
+<style scoped>
+
+.scroll::-webkit-scrollbar {
+  width: 2px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 0.5rem;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+</style>

@@ -5,23 +5,21 @@ import QuickRun from '@/components/QuickRun.vue'
 import AdvancedRun from '@/components/AdvancedRun.vue'
 import Goals from '@/components/Goals.vue'
 import WeeklyReport from '@/components/WeeklyReport.vue'
+import DailyDetails from '@/components/DailyDetails.vue'
 import RunList from '@/components/RunList.vue'
 import { Line } from 'vue-chartjs'
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale
-} from 'chart.js'
+import { useWorkoutStore } from '@/stores/WorkoutStore'
 import 'chart.js/auto'
+import { storeToRefs } from 'pinia'
 // ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-const workouts = ref([])
-
+const currentWorkout = ref()
 const currentDate = ref(new Date())
+const days = ref(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+const current = computed(() => currentDate.value.getDay())
+
+const store = useWorkoutStore()
+const { workouts } = storeToRefs(store)
 const year = computed(() => currentDate.value.getFullYear())
 const month = computed(() => currentDate.value.toLocaleString(undefined, { month: 'long' }))
 const day = computed(() => currentDate.value.getDate())
@@ -67,6 +65,10 @@ const chartStyles = computed(() => {
 const addRun = (time: number) => {
   console.log('dd', time)
   workouts.value.push(time)
+}
+
+const selectWorkout = (workout: object) => {
+  currentWorkout.value = workout
 }
 </script>
 
@@ -114,10 +116,11 @@ const addRun = (time: number) => {
       </div>
     </div>
 
-    <WeeklyReport />
+    <WeeklyReport @select="selectWorkout"/>
 
     <div class="flex flex-col sm:flex-row gap-6">
-      <QuickRun @save="addRun" />
+      <!-- <QuickRun @save="addRun" /> -->
+      <DailyDetails :current="currentWorkout"/>
       <AdvancedRun />
     </div>
 

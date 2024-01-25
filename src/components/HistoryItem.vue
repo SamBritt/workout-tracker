@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  const props = defineProps({
+    workout: Object || undefined
+  })
+</script>
 
 <template>
   <div class="flex items-center justify-center bg-gray-100 h-8 w-full rounded-md gap-2 shadow-md">
@@ -6,21 +10,26 @@
       Mon. Oct. 3rd:
     </span>
     <span class="flex flex-1 gap-1 items-center">
-      <span>3 reps</span>
+      <div v-for="data in workout.details">
+        <template v-if="workout.type !== 'run'">
+          <span>{{ data.reps }} reps</span>
+    
+          <span class="text-slate-400 text-xs">x</span>
+        </template>
+  
+        <span>
+          {{ data.distance }}
+          <span>{{ data.length }}</span>
+        </span>
+  
+        <span class="text-slate-400 text-xs">@</span>
+  
+        <span>
+          {{ data.pace }}
+          <span>{{ data.paceType }}</span>
+        </span>
 
-      <span class="text-slate-400 text-xs">x</span>
-
-      <span>
-        1,000
-        <span>meters</span>
-      </span>
-
-      <span class="text-slate-400 text-xs">@</span>
-
-      <span>
-        3:30
-        <span>/mi</span>
-      </span>
+      </div>
     </span>
   </div>
 </template>

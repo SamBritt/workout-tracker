@@ -11,15 +11,14 @@ import { Line } from 'vue-chartjs'
 import { useWorkoutStore } from '@/stores/WorkoutStore'
 import 'chart.js/auto'
 import { storeToRefs } from 'pinia'
+import type { Workout } from '@/types/workout'
 // ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-const currentWorkout = ref()
 const currentDate = ref(new Date())
-const days = ref(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
-const current = computed(() => currentDate.value.getDay())
 
 const store = useWorkoutStore()
-const { workouts } = storeToRefs(store)
+const { workouts, weeklyWorkouts, currentWorkout } = storeToRefs(store)
+
 const year = computed(() => currentDate.value.getFullYear())
 const month = computed(() => currentDate.value.toLocaleString(undefined, { month: 'long' }))
 const day = computed(() => currentDate.value.getDate())
@@ -62,13 +61,9 @@ const chartStyles = computed(() => {
     display: 'flex'
   }
 })
-const addRun = (time: number) => {
-  console.log('dd', time)
-  workouts.value.push(time)
-}
 
-const selectWorkout = (workout: object) => {
-  currentWorkout.value = workout
+const selectWorkout = (workout: Workout) => {
+  store.setCurrentWorkout(workout)
 }
 </script>
 
@@ -116,7 +111,7 @@ const selectWorkout = (workout: object) => {
       </div>
     </div>
 
-    <WeeklyReport @select="selectWorkout"/>
+    <WeeklyReport @select="selectWorkout" :workouts="weeklyWorkouts"/>
 
     <div class="flex flex-col sm:flex-row gap-6">
       <!-- <QuickRun @save="addRun" /> -->

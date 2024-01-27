@@ -19,7 +19,7 @@ const time: Time = reactive({
 </script>
 
 <template>
-  <div class="flex w-full bg-slate-700 rounded-md px-4 py-2 gap-4">
+  <div class="flex w-1/2 bg-slate-700 rounded-md px-4 py-2 gap-4">
     <div class="flex flex-col w-full gap-2">
       <Heading>Advanced Run</Heading>
 

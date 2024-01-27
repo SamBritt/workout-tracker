@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  const props = defineProps({
-    workout: Object || undefined
-  })
+const props = defineProps({
+  workout: Object
+})
 </script>
 
 <template>
@@ -10,25 +10,26 @@
       Mon. Oct. 3rd:
     </span>
     <span class="flex flex-1 gap-1 items-center">
-      <div v-for="data in workout.details">
-        <template v-if="workout.type !== 'run'">
-          <span>{{ data.reps }} reps</span>
-    
-          <span class="text-slate-400 text-xs">x</span>
-        </template>
-  
-        <span>
-          {{ data.distance }}
-          <span>{{ data.length }}</span>
-        </span>
-  
-        <span class="text-slate-400 text-xs">@</span>
-  
-        <span>
-          {{ data.pace }}
-          <span>{{ data.paceType }}</span>
-        </span>
+      <div v-for="(data, idx) in workout?.details">
+        <template v-if="idx === 0">
+          <template v-if="workout?.type !== 'run'">
+            <span>{{ data.reps }} reps</span>
 
+            <span class="text-slate-400 text-xs">x</span>
+          </template>
+
+          <span>
+            {{ data.distance }}
+            <span>{{ data.length }}</span>
+          </span>
+
+          <span class="text-slate-400 text-xs">@</span>
+
+          <span>
+            {{ data.pace }}
+            <span>{{ data.paceType }}</span>
+          </span>
+        </template>
       </div>
     </span>
   </div>

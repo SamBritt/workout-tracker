@@ -1,12 +1,13 @@
 import type { Workout } from '@/types/workout'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
+import { areDatesEqual } from '@/utility/dates'
 
 export const useWorkoutStore = defineStore('workout', () => {
   const workouts = ref([
     {
       id: 1,
-      date: 'Jan 25 2024',
+      date: 'Jan 31 2024',
       name: "Fast 4's",
       type: 'speed',
       details: [
@@ -34,7 +35,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     },
     {
       id: 2,
-      date: 'Jan 26 2024',
+      date: 'Jan 29 2024',
       name: undefined,
       type: 'run',
       details: [
@@ -52,7 +53,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     },
     {
       id: 3,
-      date: 'Jan 22 2024',
+      date: 'Jan 30 2024',
       name: undefined,
       type: 'run',
       details: [
@@ -70,12 +71,19 @@ export const useWorkoutStore = defineStore('workout', () => {
     },
   ])
   
-  const currentWorkout = ref({})
-  const days = ref(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+  const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
   
+  /**
+   * schedule for the current week
+   */
   const weeklyWorkouts = computed(() => {
+    const workoutsAfterToday = workouts.value.filter(wo => {
+      const now = new Date()
+      now.setHours(0, 0, 0, 0);
+      return new Date(wo.date) >= now
+    })
     return days.value.map((day, idx) => {
-      const workoutEntry = workouts.value.find((item) => {
+      const workoutEntry = workoutsAfterToday.find((item) => {
         const workoutDay = new Date(item.date).getDay()
         return days.value[workoutDay] === day
       })
@@ -87,9 +95,21 @@ export const useWorkoutStore = defineStore('workout', () => {
     })
   })
 
+  const getCurrentWorkout = () => {
+    const current =  weeklyWorkouts.value.find(item => {
+      return areDatesEqual(new Date(), item.date)
+    })
+    
+    return current ? current : { day: days.value[new Date().getDay()]}
+  }
+
+  const currentWorkout: Ref<Workout | { day: string }> = ref(getCurrentWorkout())
+
   function setCurrentWorkout(workout: Workout) {
     currentWorkout.value = workout
   }
+
+  
 
   return { workouts, currentWorkout, weeklyWorkouts, setCurrentWorkout }
 })

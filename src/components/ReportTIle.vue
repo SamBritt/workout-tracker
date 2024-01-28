@@ -1,25 +1,20 @@
 <script setup lang="ts">
+import type { Workout } from '@/types/workout';
 
-// const emit = defineEmits()
-const props = defineProps({
-  label: {
-    type: String
-  },
-  current: {
-    type: Number
-  },
-  id: Number,
-  workout: Object
-})
+const props = defineProps<{
+  workout: Workout,
+  id: number,
+  current: boolean
+}>()
 </script>
 
 <template>
   <div
     @click="$emit('select', workout)"
     :class="[
-      'flex flex-col items-center border-2 border-slate-700 bg-slate-700 rounded-md p-2 w-36 min-w-max',
-      { 'opacity-50': id + 1 < current },
-      { 'border-2 border-green-400': current === id + 1 }
+      'flex flex-col items-center border-2 border-slate-700 bg-slate-700 rounded-md p-2 w-36 h-20 min-w-max hover:cursor-pointer',
+      { 'opacity-50': current },
+      { 'border-2 border-green-400': current }
     ]">
     <h2 class="text-center text-base">{{ workout.day }}</h2>
     <ul

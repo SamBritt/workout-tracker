@@ -9,7 +9,9 @@
     }
   },
   "include": [
-    "src/**"
+    "src/**/*.ts",
+  "src/**/*.d.ts",
+  "src/utility/**/*.ts"
   ],
   "references": [
     {

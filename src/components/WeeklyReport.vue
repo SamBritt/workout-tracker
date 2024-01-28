@@ -2,7 +2,7 @@
 import { computed, onBeforeMount, reactive, ref } from 'vue'
 import Heading from '@/components/Heading.vue'
 import ReportTile from '@/components/ReportTile.vue'
-import { Workout } from '@/types/workout'
+import type { Workout } from '@/types/workout'
 
 const props = defineProps<{
   workouts: Workout[]
@@ -18,11 +18,11 @@ const current = computed(() => now.value.getDay())
   <div class="text-gray-200">
     <Heading>Weekly Report</Heading>
 
-    <div class="flex relative gap-1 overflow-auto scroll">
+    <div class="flex relative gap-1 overflow-auto scroll h-24">
       <ReportTile
         v-for="(item, idx) of days"
         @select="(workout) => $emit('select', workout)"
-        :current="current"
+        :current="days[current] === item"
         :workout="workouts[idx]"
         :id="idx" />
     </div>

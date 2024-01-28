@@ -12,11 +12,14 @@ import { useWorkoutStore } from '@/stores/WorkoutStore'
 import 'chart.js/auto'
 import { storeToRefs } from 'pinia'
 import type { Workout } from '@/types/workout'
+import { useUserStore } from '@/stores/UserStore'
 // ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const currentDate = ref(new Date())
 
 const store = useWorkoutStore()
+const userStore = useUserStore()
+const { state } = storeToRefs(userStore)
 const { workouts, weeklyWorkouts, currentWorkout } = storeToRefs(store)
 
 const year = computed(() => currentDate.value.getFullYear())
@@ -115,7 +118,7 @@ const selectWorkout = (workout: Workout) => {
 
     <div class="flex flex-col sm:flex-row gap-6">
       <!-- <QuickRun @save="addRun" /> -->
-      <DailyDetails :current="currentWorkout"/>
+      <DailyDetails :workout="currentWorkout"/>
       <AdvancedRun />
     </div>
 

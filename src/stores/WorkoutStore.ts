@@ -10,6 +10,9 @@ export const useWorkoutStore = defineStore('workout', () => {
       date: 'Jan 31 2024',
       name: "Fast 4's",
       type: 'speed',
+      warmup: 1,
+      cooldown: 1,
+      warmupType: 'mi',
       details: [
         {
           reps: 6,
@@ -35,7 +38,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     },
     {
       id: 2,
-      date: 'Jan 29 2024',
+      date: 'Jan 1 2024',
       name: undefined,
       type: 'run',
       details: [
@@ -53,7 +56,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     },
     {
       id: 3,
-      date: 'Jan 30 2024',
+      date: 'Jan 2 2024',
       name: undefined,
       type: 'run',
       details: [
@@ -95,6 +98,37 @@ export const useWorkoutStore = defineStore('workout', () => {
     })
   })
 
+  const weeklyMileage = computed(() => {
+    // Conversion factor: 1 mile = 1609.34 meters
+    const metersToMilesConversionFactor = 1 / 1609.34;
+
+    const totalDistanceInMiles = weeklyWorkouts.value.reduce((total, workout) => {
+      // Check if details exist
+      if (workout.details) {
+        const totalDistanceInMeters = workout.details.reduce((workoutTotal, entry) => {
+          const reps = entry.reps !== undefined ? entry.reps : 1;
+          const distance = entry.distance !== undefined ? entry.distance : 0;
+    
+          return workoutTotal + (reps * distance);
+        }, 0);
+
+        // console.log(totalDistanceInMeters)
+    
+        const totalDistanceForWorkout = totalDistanceInMeters * metersToMilesConversionFactor;
+        return total + totalDistanceForWorkout;
+      }
+    
+      return total;
+    }, 0);
+
+    console.log(totalDistanceInMiles)
+    return totalDistanceInMiles.toFixed(1)
+  })
+
+  const monthlyMileage = computed(() => {
+
+  })
+
   const getCurrentWorkout = () => {
     const current =  weeklyWorkouts.value.find(item => {
       return areDatesEqual(new Date(), item.date)
@@ -109,7 +143,5 @@ export const useWorkoutStore = defineStore('workout', () => {
     currentWorkout.value = workout
   }
 
-  
-
-  return { workouts, currentWorkout, weeklyWorkouts, setCurrentWorkout }
+  return { workouts, currentWorkout, weeklyWorkouts, setCurrentWorkout, weeklyMileage }
 })

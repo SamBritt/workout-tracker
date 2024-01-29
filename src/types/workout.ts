@@ -4,6 +4,9 @@ export interface Workout {
   date: string
   name: undefined
   type: string
+  warmup: number,
+  cooldown: number,
+  warmupType: string,
   details: [
     {
       reps: number

@@ -20,7 +20,7 @@ const currentDate = ref(new Date())
 const store = useWorkoutStore()
 const userStore = useUserStore()
 const { state } = storeToRefs(userStore)
-const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage } = storeToRefs(store)
+const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff } = storeToRefs(store)
 
 const year = computed(() => currentDate.value.getFullYear())
 const month = computed(() => currentDate.value.toLocaleString(undefined, { month: 'long' }))
@@ -108,7 +108,7 @@ const selectWorkout = (workout: Workout) => {
           label="Days Ran"
           total="7" />
         <StatTile
-          value="5"
+          :value="daysOff"
           label="Days Off"
           total="7" />
       </div>

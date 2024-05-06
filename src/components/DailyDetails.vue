@@ -2,17 +2,21 @@
 import type { Workout } from '@/types/workout'
 
 const props = defineProps<{
-  workout: Workout | { day: string, details?: never}
+  workout: Workout | { day: string; details?: never }
 }>()
 </script>
 
 <template>
-  <div class="flex flex-col items-center bg-slate-700 py-2 px-4 rounded-md w-1/2">
+  <div class="flex flex-col items-center gap-1 bg-slate-700 py-2 px-4 rounded-md w-1/2">
     <h2 class="text-xl text-slate-300">{{ workout.day }}</h2>
 
-    <div class="text-slate-300" v-if="workout.details">
-      <h4 class="text-md">Details</h4>
-      <ul class="flex flex-col gap-1">
+    <div
+      class="flex flex-col gap-1 text-slate-300"
+      v-if="workout.details">
+
+      <span v-if="workout.warmup">{{ workout.warmup }}{{ workout.warmupType }} warmup</span>
+
+      <ul class="flex flex-col gap-0.5">
         <li
           v-for="item in workout.details"
           class="leading-4">
@@ -35,6 +39,8 @@ const props = defineProps<{
           </div>
         </li>
       </ul>
+
+      <span v-if="workout.cooldown">{{ workout.cooldown }}{{ workout.warmupType }} cooldown</span>
     </div>
 
     <div v-else>

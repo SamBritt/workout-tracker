@@ -12,9 +12,8 @@ const props = defineProps<{
   <div
     @click="$emit('select', workout)"
     :class="[
-      'flex flex-col items-center border-2 border-slate-700 bg-slate-700 rounded-md p-2 w-36 h-20 min-w-max hover:cursor-pointer',
-      { 'opacity-50': current },
-      { 'border-2 border-green-400': current }
+      'flex flex-col items-center rounded-md p-2 w-36 h-20 min-w-max hover:cursor-pointer transition-all ease duration-100',
+       current ? 'bg-slate-700 shadow-sky-500/50 shadow-md scale-95' : 'bg-slate-700'
     ]">
     <h2 class="text-center text-base">{{ workout.day }}</h2>
     <ul

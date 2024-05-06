@@ -3,27 +3,27 @@ import { computed, onBeforeMount, reactive, ref } from 'vue'
 import Heading from '@/components/Heading.vue'
 import ReportTile from '@/components/ReportTile.vue'
 import type { Workout } from '@/types/workout'
+import { useWorkoutStore } from '@/stores/WorkoutStore';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
   workouts: Workout[]
 }>()
 
-const days = ref(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
-const now = ref(new Date())
-const current = computed(() => now.value.getDay())
-
+const store = useWorkoutStore()
+const { currentWorkout } = storeToRefs(store)
 </script>
 
 <template>
   <div class="text-gray-200">
     <Heading>Weekly Report</Heading>
 
-    <div class="flex relative gap-1 overflow-auto scroll h-24">
+    <div class="flex relative gap-1 overflow-hidden scroll h-24">
       <ReportTile
-        v-for="(item, idx) of days"
+        v-for="(workout, idx) in workouts"
         @select="(workout) => $emit('select', workout)"
-        :current="days[current] === item"
-        :workout="workouts[idx]"
+        :current="currentWorkout.day === workout.day"
+        :workout="workout"
         :id="idx" />
     </div>
   </div>

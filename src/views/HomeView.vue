@@ -71,7 +71,7 @@ const selectWorkout = (workout: Workout) => {
 </script>
 
 <template>
-  <main class="space-y-6">
+  <div class="space-y-6">
     <div>
       <h1 class="text-8xl text-gray-200 text-center">Samuel Britt</h1>
     </div>
@@ -126,5 +126,5 @@ const selectWorkout = (workout: Workout) => {
       <Goals />
       <RunList :list="workouts" />
     </div>
-  </main>
+  </div>
 </template>

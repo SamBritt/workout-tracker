@@ -8,7 +8,7 @@ export const useWorkoutStore = defineStore('workout', () => {
   const workouts = ref([
     {
       id: 1,
-      date: 'Jan 31 2024',
+      date: 'May 6 2024',
       name: "Fast 4's",
       type: 'speed',
       warmup: 1,
@@ -39,7 +39,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     },
     {
       id: 2,
-      date: 'Jan 28 2024',
+      date: 'May 9 2024',
       name: undefined,
       type: 'run',
       warmup: 0,
@@ -60,7 +60,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     },
     {
       id: 3,
-      date: 'Jan 29 2024',
+      date: 'May 8 2024',
       name: undefined,
       warmup: 1,
       cooldown: 1,

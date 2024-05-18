@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue'
-import Button from '@/components/Button.vue'
+import Button from '@/components/VButton.vue'
 import { computed, reactive, ref, watch } from 'vue'
 import Label from '@/components/Label.vue'
 import Input from '@/components/Input.vue'

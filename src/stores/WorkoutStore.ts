@@ -9,9 +9,10 @@ export const useWorkoutStore = defineStore('workout', () => {
   const workouts: Ref<Workout[]> = ref([])
 
   const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
+  
   const schedule = computed(() => {
     const monday = getMondaysDate()
-    const arr = []
+    const arr: string[] = []
     Array.from({ length: 7 }).forEach((_, idx) => {
       const d = new Date(monday)
       d.setDate(new Date(monday).getDate() + idx)

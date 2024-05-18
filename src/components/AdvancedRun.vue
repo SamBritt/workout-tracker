@@ -2,7 +2,7 @@
 import Heading from '@/components/Heading.vue'
 import Input from '@/components/Input.vue'
 import Label from '@/components/Label.vue'
-import Button from '@/components/Button.vue'
+import Button from '@/components/VButton.vue'
 import TextArea from '@/components/TextArea.vue'
 import Dropdown from './Dropdown.vue'
 import { reactive, ref } from 'vue'

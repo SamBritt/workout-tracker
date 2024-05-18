@@ -31,9 +31,15 @@ const month = computed(() => currentDate.value.toLocaleString(undefined, { month
 const day = computed(() => currentDate.value.getDate())
 const dayName = computed(() => currentDate.value.toLocaleString(undefined, { weekday: 'long' }))
 
+const chartView = ref({
+  mode: 'month',
+  start: '',
+  end: ''
+})
+
 const chartData = computed(() => {
   return {
-    labels: ['January', 'February', 'March', 'April', 'May'],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     datasets: [{ data: [25, 28, 30, 28, 30, 34] }]
   }
 })

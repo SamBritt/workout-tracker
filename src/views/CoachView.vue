@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import RosterList from '@/components/RosterList.vue'
 import RaceList from '@/components/RaceList.vue'
+import VButton from '@/components/VButton.vue'
 const activeView = ref('Roster')
 
 const isCurrent = (value: string) => {
@@ -16,21 +17,9 @@ const setCurrent = (value: string) => {
 <template>
   <div>
     <div class="flex gap-2">
-      <button
-        class="flex bg-slate-700 p-2 text-zinc-300"
-        @click="setCurrent('Workout')">
-        Workout
-      </button>
-      <button
-        class="flex bg-slate-700 p-2 text-zinc-300"
-        @click="setCurrent('Roster')">
-        Roster
-      </button>
-      <button
-        class="flex bg-slate-700 p-2 text-zinc-300"
-        @click="setCurrent('RaceList')">
-        Race
-      </button>
+      <VButton @click="setCurrent('Workout')">Workout</VButton>
+      <VButton @click="setCurrent('Roster')">Roster</VButton>
+      <VButton @click="setCurrent('RaceList')">Race</VButton>
     </div>
 
     <RosterList v-if="isCurrent('Roster')" />

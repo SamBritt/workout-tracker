@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/AppStore'
 import Avatar from './Avatar.vue'
+import type { Race } from '@/types/race';
 
 const appStore = useAppStore()
+
+const props = defineProps<{
+  race: Race
+}>()
 </script>
 
 <template>
   <tr
-    class="mb-2 bg-slate-700 p-2 hover:bg-slate-700/60 hover:cursor-pointer">
-    <td class="bg-slate-800 sm:p-8">
-      <p class="font-medium text-slate-300 text-lg md:text-2xl whitespace-nowrap">Nike Grand Prix</p>
-      <p class="font-light text-slate-300 text-sm whitespace-nowrap">XC Regionals</p>
+    class="mb-2 bg-slate-700 p-2 hover:bg-slate-700/60 hover:cursor-pointer rounded-lg transition-all">
+    <td class="bg-slate-900/75 sm:p-8">
+      <p class="font-medium text-slate-300 text-lg md:text-2xl whitespace-nowrap">{{ race.title }}</p>
+      <p class="font-light text-slate-300 text-sm whitespace-nowrap">{{ race.subTitle }}</p>
     </td>
 
     <td class="p-4">
@@ -25,15 +30,15 @@ const appStore = useAppStore()
     </td>
 
     <td class="">
-      <p class="font-medium text-slate-300">May 8th, 2024</p>
+      <p class="font-medium text-slate-300">{{ race.date }}</p>
     </td>
 
     <td class="">
-      <p class="font-medium text-slate-300">4:30pm - 8:00pm CST</p>
+      <p class="font-medium text-slate-300">{{ race.start }} - {{ race.end }} CST</p>
     </td>
 
     <td class="">
-      <p class="font-medium text-slate-300">2351 Nike Ln.</p>
+      <p class="font-medium text-slate-300">{{ race.location.address }}, {{ race.location.zip }}</p>
     </td>
   </tr>
 </template>

@@ -5,7 +5,7 @@ import Label from '@/components/Label.vue'
 import Button from '@/components/Button.vue'
 import TextArea from '@/components/TextArea.vue'
 import Dropdown from './Dropdown.vue'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 interface Time {
   [key: string]: string | number
@@ -16,6 +16,9 @@ const time: Time = reactive({
   seconds: '',
   mileage: ''
 })
+
+const reps = ref(0)
+const distance = ref(0)
 </script>
 
 <template>
@@ -36,6 +39,7 @@ const time: Time = reactive({
             <span class="flex flex-col text-center">
               <Label for="reps">reps</Label>
               <Input
+                v-model="reps"
                 type="number"
                 name="reps" />
             </span>
@@ -43,6 +47,7 @@ const time: Time = reactive({
             <span class="flex flex-col text-center">
               <Label for="distance">distance</Label>
               <Input
+                v-model="distance"
                 type="number"
                 name="distance" />
             </span>

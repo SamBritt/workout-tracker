@@ -17,10 +17,14 @@ import { useUserStore } from '@/stores/UserStore'
 
 const currentDate = ref(new Date())
 
-const store = useWorkoutStore()
+const workoutStore = useWorkoutStore()
 const userStore = useUserStore()
 const { state } = storeToRefs(userStore)
-const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff } = storeToRefs(store)
+const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff } = storeToRefs(workoutStore)
+
+onBeforeMount(() => {
+  workoutStore.fetchWorkouts()
+})
 
 const year = computed(() => currentDate.value.getFullYear())
 const month = computed(() => currentDate.value.toLocaleString(undefined, { month: 'long' }))
@@ -33,6 +37,7 @@ const chartData = computed(() => {
     datasets: [{ data: [25, 28, 30, 28, 30, 34] }]
   }
 })
+
 const chartOptions = computed(() => {
   return {
     responsive: true,
@@ -66,7 +71,7 @@ const chartStyles = computed(() => {
 })
 
 const selectWorkout = (workout: Workout) => {
-  store.setCurrentWorkout(workout)
+  workoutStore.setCurrentWorkout(workout)
 }
 </script>
 
@@ -101,7 +106,8 @@ const selectWorkout = (workout: Workout) => {
           :total="weeklyMileage" />
         <StatTile
           value="25"
-          label="miles /mo" />
+          label="miles /mo"
+          total="80" />
 
         <StatTile
           value="2"
@@ -114,11 +120,13 @@ const selectWorkout = (workout: Workout) => {
       </div>
     </div>
 
-    <WeeklyReport @select="selectWorkout" :workouts="weeklyWorkouts"/>
+    <WeeklyReport
+      @select="selectWorkout"
+      :workouts="weeklyWorkouts" />
 
     <div class="flex flex-col sm:flex-row gap-6">
       <!-- <QuickRun @save="addRun" /> -->
-      <DailyDetails :workout="currentWorkout"/>
+      <DailyDetails :workout="currentWorkout" />
       <AdvancedRun />
     </div>
 

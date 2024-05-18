@@ -3,83 +3,10 @@ import { defineStore } from 'pinia'
 import { computed, ref, type Ref } from 'vue'
 import { areDatesEqual, getMondaysDate, getSundaysDate, shortDate } from '@/utility/dates'
 import { afterToday } from '@/utility/dates'
+import { getWorkouts } from '@/api/workout'
 
 export const useWorkoutStore = defineStore('workout', () => {
-  const workouts = ref([
-    {
-      id: 1,
-      date: 'May 6 2024',
-      name: "Fast 4's",
-      type: 'speed',
-      warmup: 1,
-      cooldown: 1,
-      warmupType: 'mi',
-      details: [
-        {
-          reps: 6,
-          distance: 400,
-          length: 'm',
-          pace: 60,
-          paceType: 'sec',
-          rest: 30,
-          restType: 'sec',
-          actual: undefined
-        },
-        {
-          reps: 2,
-          distance: 800,
-          length: 'm',
-          pace: '2:10',
-          paceType: 'min',
-          rest: 1,
-          restType: 'min',
-          actual: undefined
-        }
-      ]
-    },
-    {
-      id: 2,
-      date: 'May 9 2024',
-      name: undefined,
-      type: 'run',
-      warmup: 0,
-      cooldown: 0,
-      warmupType: '',
-      details: [
-        {
-          reps: undefined,
-          distance: 5,
-          length: 'mi',
-          pace: 7,
-          paceType: 'min',
-          rest: undefined,
-          restType: undefined,
-          actual: 35
-        }
-      ]
-    },
-    {
-      id: 3,
-      date: 'May 8 2024',
-      name: undefined,
-      warmup: 1,
-      cooldown: 1,
-      warmupType: 'mi',
-      type: 'run',
-      details: [
-        {
-          reps: undefined,
-          distance: 5,
-          length: 'mi',
-          pace: undefined,
-          paceType: undefined,
-          rest: undefined,
-          restType: undefined,
-          actual: 35
-        }
-      ]
-    }
-  ])
+  const workouts: Ref<Workout[]> = ref([])
 
   const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
   const schedule = computed(() => {
@@ -115,16 +42,17 @@ export const useWorkoutStore = defineStore('workout', () => {
   })
   const afterMonday = computed(() => {
     console.log(getSundaysDate())
-    return workouts.value.filter(workout => new Date(workout.date) >= new Date(getMondaysDate()) )
+    return workouts.value.filter((workout) => new Date(workout.date) >= new Date(getMondaysDate()))
   })
 
   const weeklyMileage = computed((type = 'week') => {
     const metersToMilesConversionFactor = 1 / 1609.34
 
-    
-    const arr = workouts.value.filter(workout => {
-      return new Date(workout.date) >= new Date(getMondaysDate())
-        && new Date(workout.date) <= new Date(getSundaysDate())
+    const arr = workouts.value.filter((workout) => {
+      return (
+        new Date(workout.date) >= new Date(getMondaysDate()) &&
+        new Date(workout.date) <= new Date(getSundaysDate())
+      )
     })
 
     const totalDistanceInMiles = arr.reduce((total, workout) => {
@@ -149,7 +77,13 @@ export const useWorkoutStore = defineStore('workout', () => {
   })
 
   const monthlyMileage = computed(() => {})
-  const daysOff = computed(() => weeklyWorkouts.value.filter(workout => !workout.details).length)
+  const daysOff = computed(() => weeklyWorkouts.value.filter((workout) => !workout.details).length)
+
+  const fetchWorkouts = () => {
+    getWorkouts()
+      .then(workouts => workouts.value = workouts)
+      .catch(e => console.log(e))
+  }
 
   const getCurrentWorkout = () => {
     const current = weeklyWorkouts.value.find((item) => {
@@ -161,9 +95,19 @@ export const useWorkoutStore = defineStore('workout', () => {
 
   const currentWorkout: Ref<Workout | { day: string }> = ref(getCurrentWorkout())
 
-  function setCurrentWorkout(workout: Workout) {
+  const setCurrentWorkout = (workout: Workout) => {
     currentWorkout.value = workout
   }
 
-  return { afterMonday, workouts, schedule, currentWorkout, weeklyWorkouts, setCurrentWorkout, weeklyMileage, daysOff }
+  return {
+    afterMonday,
+    workouts,
+    schedule,
+    currentWorkout,
+    weeklyWorkouts,
+    setCurrentWorkout,
+    fetchWorkouts,
+    weeklyMileage,
+    daysOff
+  }
 })

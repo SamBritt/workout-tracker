@@ -1,48 +1,40 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends 'timer' | 'text' | 'number'">
 import { computed, ref } from 'vue'
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: 'text'
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  placeholder: {
-    type: String,
-    default: '00'
-  },
-  font: {
-    type: String,
-    default: null
-  },
-  modelValue: {}
-})
+interface Props {
+  type?: T
+  name: string
+  placeholder?: string
+  font?: string
+  modelValue: string | number
+}
+
+const { type = 'text', name, placeholder = '00', font, modelValue } = defineProps<Props>()
 
 const emit = defineEmits(['update:modelValue'])
 
-const value = computed({
-  get() {
-    return props.modelValue
+type Value = T extends 'number' ? number : string
+
+const value = computed<Value>({
+  get: () => {
+    return modelValue as Value
   },
-  set(value) {
+  set(value: Value) {
     emit('update:modelValue', value)
   }
 })
 
-const onChange = (event: Event, type: string) => {
-  if (props.type === 'timer') {
+const onChange = (event: Event, eType: string) => {
+  if (type === 'timer') {
     const numericValue = (event.target as HTMLInputElement).value.replace(/[^0-9]/g, '')
     if (Number(numericValue) < 0) {
-      value.value = 0
+      value.value = 0 as Value
     } else if (Number(numericValue) > 59) {
-      value.value = 59
+      value.value = 59 as Value
     } else if (Number(numericValue) < 10) {
-      value.value = `0${numericValue}`
+      value.value = `0${numericValue}` as Value
     } else if (numericValue.length >= 3) {
-      value.value = numericValue.slice(-2)
+      value.value = numericValue.slice(-2) as Value
       console.log(value.value)
     }
   }
@@ -61,11 +53,11 @@ const inputStyles = computed(() => {
     `rounded-sm`
   ]
 
-  if (['number', 'timer'].includes(props.type)) {
+  if (['number', 'timer'].includes(type)) {
     styles.push('w-auto')
   }
 
-  switch (props.font) {
+  switch (font) {
     case 'big':
       styles.push('text-5xl')
       break
@@ -79,10 +71,10 @@ const inputStyles = computed(() => {
 
 const inputProps = computed(() => {
   let attrs = {
-    placeholder: props.placeholder
+    placeholder: placeholder
   }
 
-  switch (props.type) {
+  switch (type) {
     case 'number':
       Object.assign(attrs, {
         type: 'number',

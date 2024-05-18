@@ -1,0 +1,77 @@
+{
+  "workouts": [
+    {
+      "id": 1,
+      "date": "May 6 2024",
+      "name": "Fast 4's",
+      "type": "speed",
+      "warmup": 1,
+      "cooldown": 1,
+      "warmupType": "mi",
+      "details": [
+        {
+          "reps": 6,
+          "distance": 400,
+          "length": "m",
+          "pace": 60,
+          "paceType": "sec",
+          "rest": 30,
+          "restType": "sec",
+          "actual": null
+        },
+        {
+          "reps": 2,
+          "distance": 800,
+          "length": "m",
+          "pace": "2:10",
+          "paceType": "min",
+          "rest": 1,
+          "restType": "min",
+          "actual": null
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "date": "May 9 2024",
+      "name": null,
+      "type": "run",
+      "warmup": 0,
+      "cooldown": 0,
+      "warmupType": "",
+      "details": [
+        {
+          "reps": null,
+          "distance": 5,
+          "length": "mi",
+          "pace": 7,
+          "paceType": "min",
+          "rest": null,
+          "restType": null,
+          "actual": 35
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "date": "May 8 2024",
+      "name": null,
+      "warmup": 1,
+      "cooldown": 1,
+      "warmupType": "mi",
+      "type": "run",
+      "details": [
+        {
+          "reps": null,
+          "distance": 5,
+          "length": "mi",
+          "pace": null,
+          "paceType": null,
+          "rest": null,
+          "restType": null,
+          "actual": 35
+        }
+      ]
+    }
+  ]
+}

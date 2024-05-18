@@ -17,7 +17,7 @@ const showDetails = (race: Race) => {
 </script>
 
 <template>
-  <table class="table table-auto w-full border-collapse border border-slate-500">
+  <table class="table table-auto w-full border-none border-separate border-spacing-y-4">
     <colgroup>
       <col class="w-2/12" />
       <col class="w-2/12" />
@@ -25,17 +25,17 @@ const showDetails = (race: Race) => {
       <col class="w-2/12" />
       <col class="w-2/12" />
     </colgroup>
-    <thead class="bg-slate-600 text-left">
-      <tr class="p-2">
-        <th>Event</th>
-        <th>Athletes</th>
-        <th>Date</th>
-        <th>Start/End</th>
-        <th>Location</th>
+    <thead class="bg-slate-700/50 text-left p-2">
+      <tr class="p-2 text-slate-200">
+        <th class="p-2">Event</th>
+        <th class="p-2">Athletes</th>
+        <th class="p-2">Date</th>
+        <th class="p-2">Start/End</th>
+        <th class="p-2">Location</th>
       </tr>
     </thead>
 
-    <tbody class="divide-y divide-slate-500">
+    <tbody class="">
       <RaceListItem
         v-for="race of races"
         @click="showDetails(race)"

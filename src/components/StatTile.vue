@@ -1,15 +1,9 @@
 <script setup lang="ts">
-const props = defineProps({
-  label: {
-    type: String
-  },
-  value: {
-    type: String || Number
-  },
-  total: {
-    type: String || Number
-  }
-})
+defineProps<{
+  label: string
+  value: string | number
+  total: string | number
+}>()
 </script>
 
 <template>

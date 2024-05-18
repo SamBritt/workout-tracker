@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Workout } from '@/types/workout';
 
-const props = defineProps<{
+const { workout, id, current } = defineProps<{
   workout: Workout,
   id: number,
   current: boolean

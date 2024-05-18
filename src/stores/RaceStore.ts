@@ -16,6 +16,18 @@ export const useRaceStore = defineStore('race', () => {
         zip: '37092'
       }
     },
+    {
+      id: '2',
+      title: 'All-State Championship',
+      subTitle: '',
+      date: 'May, 30th, 2024',
+      start: '4:00pm',
+      end: '8:00pm',
+      location: {
+        address: '2898 Steeplechase Ln.',
+        zip: '37342'
+      }
+    },
   ])
 
   const currentRace: Ref<Race> = ref({

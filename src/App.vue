@@ -7,8 +7,9 @@ import AthleteDetails from '@/components/AthleteDetails.vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from './stores/AppStore'
 import { useUserStore } from './stores/UserStore'
-import Avatar from './components/Avatar.vue'
-import RaceDetails from './components/RaceDetails.vue'
+import Avatar from '@/components/Avatar.vue'
+import RaceDetails from '@/components/RaceDetails.vue'
+import VFooter from '@/components/VFooter.vue'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -28,12 +29,14 @@ const modals = {
 
 <template>
   <header>
-    <div class="wrapper flex justify-end mb-4">
+    <div class="flex justify-end container mx-auto max-w-screen-lg px-8">
       <nav
-        class="flex gap-4 justify-center items-center bg-slate-700 text-slate-100 rounded-xl shadow-lg p-2 px-">
+        class="flex gap-4 justify-center items-center bg-slate-700 text-slate-100 rounded-3xl shadow-lg p-2 px-4">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/coach">Coach</RouterLink>
-        <Avatar :first="state.firstName" :last="state.lastName"/>
+        <Avatar
+          :first="state.firstName"
+          :last="state.lastName" />
       </nav>
     </div>
   </header>
@@ -50,9 +53,13 @@ const modals = {
     <component :is="menus[menu.current]" />
   </SideMenu>
 
-  <main>
+  <main class="container mx-auto min-h-screen max-w-screen-lg p-8">
     <RouterView />
   </main>
+
+
+  <VFooter />
+
 </template>
 
 <style scoped></style>

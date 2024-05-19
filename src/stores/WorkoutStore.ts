@@ -82,7 +82,7 @@ export const useWorkoutStore = defineStore('workout', () => {
 
   const fetchWorkouts = () => {
     getWorkouts()
-      .then(workouts => workouts.value = workouts)
+      .then(wo => workouts.value = wo)
       .catch(e => console.log(e))
   }
 

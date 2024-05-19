@@ -8,7 +8,10 @@ export const getWorkouts = () => {
     url: `http://localhost:3000/workouts`,
     method: 'get'
   })
-    .then((res) => res)
+    .then((res) => {
+      console.log(res)
+      return res.data
+    })
     .catch((e) => console.log(e))
 }
 
@@ -25,16 +28,16 @@ export const addWorkout = (payload: Workout) => {
     .catch((e) => console.log(e))
 }
 
-// TODO 
+// TODO
 export const assignWorkout = (payload: Workout) => {
-    console.log('add workouts')
-  
-    return axios({
-      url: `http://localhost:3000/workouts/assign`,
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      data: payload
-    })
-      .then((res) => res)
-      .catch((e) => console.log(e))
-  }
+  console.log('add workouts')
+
+  return axios({
+    url: `http://localhost:3000/workouts/assign`,
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    data: payload
+  })
+    .then((res) => res)
+    .catch((e) => console.log(e))
+}

@@ -14,7 +14,7 @@ import VFooter from '@/components/VFooter.vue'
 const appStore = useAppStore()
 const userStore = useUserStore()
 
-const { state } = storeToRefs(userStore)
+const { firstName, lastName } = storeToRefs(userStore)
 const { modal, menu } = storeToRefs(appStore)
 
 const menus = {
@@ -35,8 +35,8 @@ const modals = {
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/coach">Coach</RouterLink>
         <Avatar
-          :first="state.firstName"
-          :last="state.lastName" />
+          :first="firstName"
+          :last="lastName" />
       </nav>
     </div>
   </header>

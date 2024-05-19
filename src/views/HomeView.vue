@@ -13,14 +13,16 @@ import 'chart.js/auto'
 import { storeToRefs } from 'pinia'
 import type { Workout } from '@/types/workout'
 import { useUserStore } from '@/stores/UserStore'
+import Avatar from '@/components/Avatar.vue'
 // ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const currentDate = ref(new Date())
 
 const workoutStore = useWorkoutStore()
 const userStore = useUserStore()
-const { state } = storeToRefs(userStore)
-const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff } = storeToRefs(workoutStore)
+const { firstName, lastName } = storeToRefs(userStore)
+const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff } =
+  storeToRefs(workoutStore)
 
 onBeforeMount(() => {
   workoutStore.fetchWorkouts()
@@ -39,7 +41,20 @@ const chartView = ref({
 
 const chartData = computed(() => {
   return {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    labels: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
     datasets: [{ data: [25, 28, 30, 28, 30, 34] }]
   }
 })
@@ -59,6 +74,11 @@ const chartOptions = computed(() => {
         }
       },
       y: {
+        min: 0,
+        max: 60,
+        ticks: {
+          stepSize: 10
+        },
         grid: {
           display: false
         } // Keep other y-axis options here if needed
@@ -69,10 +89,9 @@ const chartOptions = computed(() => {
 
 const chartStyles = computed(() => {
   return {
-    width: '100%',
     height: 'auto',
     position: 'relative',
-    display: 'flex'
+    display: 'flex',
   }
 })
 
@@ -83,27 +102,45 @@ const selectWorkout = (workout: Workout) => {
 
 <template>
   <div class="space-y-6">
-    <div>
-      <h1 class="text-8xl text-gray-200 text-center">Samuel Britt</h1>
-    </div>
+    <section class="flex items-end justify-center gap-2">
+      <Avatar
+        :first="firstName"
+        :last="lastName" />
+      <h1 class="flex text-5xl text-gray-200 text-center leading-10">
+        {{ firstName }} {{ lastName }}
+      </h1>
+    </section>
     <!-- Chart -->
     <div class="flex flex-col gap-6">
-      <div class="relative bg-slate-700 h-60 rounded-md p-4">
-        <div class="text-center">
-          <div class="text-2xl font-light text-gray-300">
-            {{ dayName }}
-            {{ month }}
-            {{ day }}
-            {{ year }}
+      <section class="flex">
+        <div class="flex flex-col bg-slate-700/20 rounded-l-md text-slate-200">
+          <h4 class="p-4 text-center">Filter</h4>
+          <div class="px-8">
+            <div class="flex gap-4">
+              <button>-</button>
+              <p>Month</p>
+              <button>+</button>
+            </div>
           </div>
         </div>
-        <Line
-          class="flex w-full"
-          :style="chartStyles"
-          id="my-chart-id"
-          :options="chartOptions"
-          :data="chartData" />
-      </div>
+
+        <div class="relative bg-slate-700 h-60 rounded-r-md p-4 w-full">
+          <div class="text-center">
+            <div class="text-2xl font-light text-gray-300">
+              {{ dayName }}
+              {{ month }}
+              {{ day }}
+              {{ year }}
+            </div>
+          </div>
+          <Line
+            class="flex w-full"
+            :style="chartStyles"
+            id="my-chart-id"
+            :options="chartOptions"
+            :data="chartData" />
+        </div>
+      </section>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
         <StatTile

@@ -2,11 +2,9 @@ import { defineStore } from 'pinia'
 import { computed, ref, reactive } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
-  const state = reactive({
-    firstName: 'Samuel',
-    lastName: 'Britt',
-    accountType: 'admin'
-  })
+  const firstName = ref('Samuel')
+  const lastName = ref('Britt')
+  const accountType = ref('admin')
 
-  return { state }
+  return { firstName, lastName, accountType }
 })

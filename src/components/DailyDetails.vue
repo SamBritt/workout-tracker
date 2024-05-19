@@ -7,8 +7,11 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-1 bg-slate-700 py-2 px-4 rounded-md w-1/2">
-    <h2 class="text-xl text-slate-300">{{ workout.day }}</h2>
+  <section class="flex flex-col items-center gap-1 bg-slate-700 py-2 px-4 rounded-md w-1/2">
+    <div class="flex w-full">
+      <h2 class="ml-auto text-xl text-slate-300">{{ workout.day }}</h2>
+      <p class="ml-auto text-sky-300 hover:cursor-pointer hover:text-sky-200" role="button">Edit</p>
+    </div>
 
     <div
       class="flex flex-col gap-1 text-slate-300"
@@ -43,8 +46,8 @@ const props = defineProps<{
       <span v-if="workout.cooldown">{{ workout.cooldown }}{{ workout.warmupType }} cooldown</span>
     </div>
 
-    <div v-else>
-      <h3 class="text-3xl text-slate-300">OFF</h3>
+    <div v-else class="h-full flex items-center">
+      <h3 class="text-4xl text-slate-400">OFF</h3>
     </div>
-  </div>
+  </section>
 </template>

@@ -55,7 +55,7 @@ const chartData = computed(() => {
       'November',
       'December'
     ],
-    datasets: [{ data: [25, 28, 30, 28, 30, 34] }]
+    datasets: [{ data: [0, 5, 25, 28, 30, 28, 30, 34] }]
   }
 })
 
@@ -74,10 +74,11 @@ const chartOptions = computed(() => {
         }
       },
       y: {
+        beginAtZero: true,
         min: 0,
-        max: 60,
+        max: 50,
         ticks: {
-          stepSize: 10
+          stepSize: 1
         },
         grid: {
           display: false
@@ -91,7 +92,7 @@ const chartStyles = computed(() => {
   return {
     height: 'auto',
     position: 'relative',
-    display: 'flex',
+    display: 'flex'
   }
 })
 
@@ -112,9 +113,10 @@ const selectWorkout = (workout: Workout) => {
     </section>
     <!-- Chart -->
     <div class="flex flex-col gap-6">
-      <section class="flex">
-        <div class="flex flex-col bg-slate-700/20 rounded-l-md text-slate-200">
-          <h4 class="p-4 text-center">Filter</h4>
+      <section class="flex flex-col sm:flex-row">
+        <div
+          class="flex flex-col bg-slate-700/20 rounded-l-md text-slate-200 order-2 sm:order-none">
+          <h4 class="p-8 text-center">Filter</h4>
           <div class="px-8">
             <div class="flex gap-4">
               <button>-</button>
@@ -124,7 +126,7 @@ const selectWorkout = (workout: Workout) => {
           </div>
         </div>
 
-        <div class="relative bg-slate-700 h-60 rounded-r-md p-4 w-full">
+        <div class="relative bg-slate-700 h-96 min-h rounded-r-md p-8 w-full">
           <div class="text-center">
             <div class="text-2xl font-light text-gray-300">
               {{ dayName }}

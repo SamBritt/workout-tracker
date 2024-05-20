@@ -1,4 +1,4 @@
-import type { Workout } from '@/types/workout'
+import type { DayOff, Workout, WorkoutScheduled } from '@/types/workout'
 import { defineStore } from 'pinia'
 import { computed, ref, type Ref } from 'vue'
 import { areDatesEqual, getMondaysDate, getSundaysDate, shortDate } from '@/utility/dates'
@@ -9,8 +9,8 @@ export const useWorkoutStore = defineStore('workout', () => {
   const workouts: Ref<Workout[]> = ref([])
 
   const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
-  
-  const schedule = computed(() => {
+
+  const schedule = computed<string[]>(() => {
     const monday = getMondaysDate()
     const arr: string[] = []
     Array.from({ length: 7 }).forEach((_, idx) => {
@@ -25,19 +25,20 @@ export const useWorkoutStore = defineStore('workout', () => {
   /**
    * schedule for the current week
    */
-  const weeklyWorkouts = computed((type = 'week') => {
+  const weeklyWorkouts = computed<WorkoutScheduled[]>((type = 'week') => {
     const monday = getMondaysDate()
 
-    return schedule.value.map((day, idx) => {
-      const workoutEntry = workouts.value.find((item) => {
-        const workoutDay = new Date(item.date).getDay()
-        console.log(areDatesEqual(item.date, day))
-        return areDatesEqual(item.date, day)
-      })
+    return schedule.value.map((currentDay, idx) => {
+      const workoutEntry =
+        workouts.value.find((item) => {
+          const workoutDay = new Date(item.date).getDay()
+          console.log(areDatesEqual(item.date, currentDay))
+          return areDatesEqual(item.date, currentDay)
+        }) || []
 
       return {
-        day,
-        ...((workoutEntry ? { ...workoutEntry } : {}) as Workout)
+        ...((workoutEntry ? { ...workoutEntry } : {}) as Workout),
+        day: currentDay
       }
     })
   })
@@ -69,7 +70,8 @@ export const useWorkoutStore = defineStore('workout', () => {
         }, 0)
         console.log(workout)
 
-        return total + totalDistanceInMeters + workout.warmup + workout.cooldown
+        const total = (workout.warmup && workout.cooldown) || 0
+        return total + totalDistanceInMeters + total
       }
       return total
     }, 0)
@@ -77,24 +79,23 @@ export const useWorkoutStore = defineStore('workout', () => {
     return totalDistanceInMiles.toFixed(1)
   })
 
-  const monthlyMileage = computed(() => {})
   const daysOff = computed(() => weeklyWorkouts.value.filter((workout) => !workout.details).length)
 
   const fetchWorkouts = () => {
     getWorkouts()
-      .then(wo => workouts.value = wo)
-      .catch(e => console.log(e))
+      .then((wo) => (workouts.value = wo))
+      .catch((e) => console.log(e))
   }
 
-  const getCurrentWorkout = () => {
+  const getCurrentWorkout = (): WorkoutScheduled => {
     const current = weeklyWorkouts.value.find((item) => {
-      return areDatesEqual(new Date(), item.day)
+      return areDatesEqual(new Date(), item.day as string)
     })
 
-    return current ? current : { day: schedule.value[new Date().getDay()] }
+    return current ? current : ({ day: schedule.value[new Date().getDay()] } as DayOff)
   }
 
-  const currentWorkout: Ref<Workout | { day: string }> = ref(getCurrentWorkout())
+  const currentWorkout: Ref<WorkoutScheduled> = ref(getCurrentWorkout())
 
   const setCurrentWorkout = (workout: Workout) => {
     currentWorkout.value = workout

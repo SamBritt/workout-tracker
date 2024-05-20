@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import Heading from '@/components/Heading.vue'
 import HistoryItem from '@/components/HistoryItem.vue'
+import { Workout } from '@/types/workout'
 
-const props = defineProps({
-  list: {
-    type: [Object],
-    default: []
-  }
-})
+defineProps<{
+  list: Workout[]
+}>()
 </script>
 
 <template>
@@ -15,7 +13,10 @@ const props = defineProps({
     <Heading>Run History</Heading>
 
     <div class="flex flex-col gap-4">
-      <HistoryItem v-for="workout in list" :workout="workout"/>
+      <HistoryItem
+        v-for="workout in list"
+        :workout="workout"
+        :key="workout.id" />
     </div>
   </div>
 </template>

@@ -3,16 +3,10 @@
   "compilerOptions": {
     "vue": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-  "src/**/*.d.ts",
-  "src/utility/**/*.ts"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/utility/**/*.ts", "src/**/*.vue"],
   "references": [
     {
       "path": "./tsconfig.node.json"

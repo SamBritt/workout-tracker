@@ -2,7 +2,7 @@
 import Heading from '@/components/Heading.vue'
 import TextArea from '@/components/TextArea.vue'
 import Label from '@/components/Label.vue'
-import Input from '@/components/Input.vue'
+import Input from '@/components/VInput.vue'
 import { ref } from 'vue';
 
 const mileage = ref<number>(0)

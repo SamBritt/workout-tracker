@@ -1,12 +1,15 @@
 type TDate = Date | string
 
-export const shortDate = (date: TDate) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
+export const shortDate = (date: TDate, options: null | Intl.DateTimeFormatOptions = null) => {
+  if (!options) {
+    return new Date(date).toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+  }
+  return new Date(date).toLocaleDateString('en-US', options)
 }
 
 export const afterToday = (date: TDate) => {
@@ -29,11 +32,11 @@ export const getMondaysDate = () => {
 }
 
 export const getSundaysDate = () => {
-  const currentDate = new Date();
-  const currentDayOfWeek = currentDate.getDay();
-  const daysToSubtract = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
+  const currentDate = new Date()
+  const currentDayOfWeek = currentDate.getDay()
+  const daysToSubtract = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek
 
-  currentDate.setDate(currentDate.getDate() + daysToSubtract);
+  currentDate.setDate(currentDate.getDate() + daysToSubtract)
 
-  return shortDate(currentDate);
+  return shortDate(currentDate)
 }

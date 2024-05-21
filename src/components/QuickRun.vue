@@ -3,7 +3,7 @@ import Heading from '@/components/Heading.vue'
 import Button from '@/components/VButton.vue'
 import { computed, reactive, ref, watch } from 'vue'
 import Label from '@/components/Label.vue'
-import Input from '@/components/Input.vue'
+import Input from '@/components/VInput.vue'
 
 interface Time {
   [key: string]: string | number
@@ -54,9 +54,7 @@ const save = () => {
 </script>
 
 <template>
-  <div class="flex flex-col bg-slate-700 w-full h-60 rounded-md shadow-lg shadow-sky-800/25 hover:shadow-sky-800/50 transition-shadow ease-out px-8 py-4">
-    <Heading>Quick Run</Heading>
-
+  <div class="flex flex-col w-full h-60 rounded-md">
     <div class="flex flex-col h-full">
       <div class="flex self-center h-1/2 justify-center items-center">
         <div class="flex flex-col text-center">

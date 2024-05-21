@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import type { WorkoutScheduled, Workout, DayOff } from '@/types/workout'
+import type { WorkoutScheduled } from '@/types/workout'
+import VButton from './VButton.vue'
+import SplitItem from './SplitItem.vue'
 
 defineProps<{
   workout: WorkoutScheduled
@@ -7,51 +9,64 @@ defineProps<{
 </script>
 
 <template>
-  <section class="flex flex-col items-center gap-1 bg-slate-700 py-2 px-4 rounded-md w-1/2">
-    <div class="flex w-full">
-      <h2 class="ml-auto text-xl text-slate-300">{{ workout.day }}</h2>
+  <section
+    :class="[
+      { 'shadow shadow-green-300/75': workout.completed },
+      'flex flex-col items-center bg-slate-700 p-4 rounded-md w-96 transition-all'
+    ]">
+    <div class="flex w-full justify-between items-center">
       <p
-        class="ml-auto text-sky-300 hover:cursor-pointer hover:text-sky-200"
+        :class="[
+          'w-3.5 h-3.5 rounded-full shadow-inner transition-all',
+          workout.completed ? 'bg-green-300 shadow-emerald-900' : 'bg-gray-500 shadow-gray-900'
+        ]"></p>
+
+      <h2 class="text-xl text-slate-300">{{ workout.day }}</h2>
+
+      <p
+        class="text-sky-300 hover:cursor-pointer hover:text-sky-200"
         role="button">
         Edit
       </p>
     </div>
 
     <div
-      class="flex flex-col gap-1 text-slate-300"
+      :class="[
+        'flex flex-col justify-evenly gap-1 h-full w-full text-slate-300',
+        workout.completed ? 'flex-row' : 'flex-col'
+      ]"
       v-if="workout.details">
-      <span v-if="workout.warmup">{{ workout.warmup }}{{ workout.warmupType }} warmup</span>
+      <div class="flex justify-evenly items-center w-full">
+        <div>
+          <span v-if="workout.warmup">{{ workout.warmup }}{{ workout.warmupType }} warmup</span>
 
-      <ul class="flex flex-col gap-0.5">
-        <li
-          v-for="(item, idx) in workout.details"
-          :key="`item-${idx}`"
-          class="leading-4">
-          <div>
-            <span>{{ item.reps }}</span>
-            <span
-              v-if="item.reps"
-              class="text-xs text-slate-400">
-              &nbsp;x&nbsp;
-            </span>
-            <span>{{ item.distance }}{{ item.length }}</span>
-            <span class="text-xs text-slate-400">&nbsp;@&nbsp;</span>
-            <span>{{ item.pace }}{{ item.paceType }}</span>
-          </div>
-          <div
-            class="text-slate-400"
-            v-if="item.rest">
-            <span class="text-xs">{{ item.rest }}</span>
-            <span class="text-xs">{{ item.restType }} rest</span>
-          </div>
-        </li>
-      </ul>
+          <ul class="flex flex-col gap-0.5">
+            <SplitItem
+              v-for="(item, idx) in workout.details"
+              :split="item"
+              :key="`item-${idx}`" />
+          </ul>
 
-      <span v-if="workout.cooldown">{{ workout.cooldown }}{{ workout.warmupType }} cooldown</span>
+          <span v-if="workout.cooldown">
+            {{ workout.cooldown }}{{ workout.warmupType }} cooldown
+          </span>
+        </div>
+
+        <div
+          v-if="workout.completed"
+          class="flex text-green-300 text-2xl">
+          COMPLETE
+        </div>
+      </div>
+
+      <div class="flex">
+        <VButton>Undo</VButton>
+        <VButton>Undo</VButton>
+      </div>
     </div>
 
     <div
-      v-else
+      v-if="!workout.details"
       class="h-full flex items-center">
       <h3 class="text-4xl text-slate-400">OFF</h3>
     </div>

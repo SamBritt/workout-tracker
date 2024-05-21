@@ -7,6 +7,7 @@ import { getWorkouts } from '@/api/workout'
 
 export const useWorkoutStore = defineStore('workout', () => {
   const workouts: Ref<Workout[]> = ref([])
+  const loadingWorkouts = ref(false)
 
   const days = ref(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
 
@@ -82,9 +83,15 @@ export const useWorkoutStore = defineStore('workout', () => {
   const daysOff = computed(() => weeklyWorkouts.value.filter((workout) => !workout.details).length)
 
   const fetchWorkouts = () => {
+    loadingWorkouts.value = true
+
     getWorkouts()
-      .then((wo) => (workouts.value = wo))
+      .then((wo) => {
+        workouts.value = wo
+        setCurrentWorkout(getCurrentWorkout())
+      })
       .catch((e) => console.log(e))
+      .finally(() => loadingWorkouts.value = false)
   }
 
   const getCurrentWorkout = (): WorkoutScheduled => {
@@ -92,12 +99,15 @@ export const useWorkoutStore = defineStore('workout', () => {
       return areDatesEqual(new Date(), item.day as string)
     })
 
+    console.log('current', current)
+    console.log('workouts', weeklyWorkouts.value)
+
     return current ? current : ({ day: schedule.value[new Date().getDay()] } as DayOff)
   }
 
   const currentWorkout: Ref<WorkoutScheduled> = ref(getCurrentWorkout())
 
-  const setCurrentWorkout = (workout: Workout) => {
+  const setCurrentWorkout = (workout: WorkoutScheduled) => {
     currentWorkout.value = workout
   }
 
@@ -105,6 +115,7 @@ export const useWorkoutStore = defineStore('workout', () => {
     afterMonday,
     workouts,
     schedule,
+    loadingWorkouts,
     currentWorkout,
     weeklyWorkouts,
     setCurrentWorkout,

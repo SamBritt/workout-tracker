@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive, ref } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import StatTile from '@/components/StatTile.vue'
 import QuickRun from '@/components/QuickRun.vue'
 import AdvancedRun from '@/components/AdvancedRun.vue'
@@ -17,11 +17,11 @@ import Avatar from '@/components/Avatar.vue'
 // ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const currentDate = ref(new Date())
-
+const activeDetailView = ref('')
 const workoutStore = useWorkoutStore()
 const userStore = useUserStore()
 const { firstName, lastName } = storeToRefs(userStore)
-const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff } =
+const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff, loadingWorkouts } =
   storeToRefs(workoutStore)
 
 onBeforeMount(() => {
@@ -96,8 +96,19 @@ const chartStyles = computed(() => {
   }
 })
 
+const detailsViewProps = computed(() => {
+  return {
+    workout: currentWorkout.value
+  }
+})
+
 const selectWorkout = (workout: Workout) => {
   workoutStore.setCurrentWorkout(workout)
+}
+
+const detailView = {
+  AdvancedRun: AdvancedRun,
+  QuickRun: QuickRun
 }
 </script>
 
@@ -169,10 +180,41 @@ const selectWorkout = (workout: Workout) => {
       @select="selectWorkout"
       :workouts="weeklyWorkouts" />
 
-    <div class="flex flex-col sm:flex-row gap-6">
+    <div class="flex flex-col sm:flex-row">
       <!-- <QuickRun @save="addRun" /> -->
-      <DailyDetails :workout="currentWorkout" />
-      <AdvancedRun />
+      <DailyDetails
+        v-if="!loadingWorkouts"
+        :workout="currentWorkout" />
+
+      <div
+        class="flex flex-col bg-slate-700/20 rounded-r-md text-slate-200 order-2 sm:order-none w-32 hover:w-36 h-60 min-h-fit min-w-fit p-4 transition-all">
+        <div
+          class="flex flex-col justify-evenly w-full h-full"
+          v-if="!activeDetailView">
+          <button
+            class="opacity-75 hover:opacity-100 h-full hover:text-md transition-all"
+            @click="() => (activeDetailView = 'QuickRun')">
+            Run
+          </button>
+          <hr class="border-slate-400" />
+          <button
+            class="opacity-75 hover:opacity-100 h-full hover:text-md transition-all"
+            @click="() => (activeDetailView = 'AdvancedRun')">
+            Workout
+          </button>
+        </div>
+
+        <template v-else>
+          <button
+            class="w-fit"
+            @click="() => (activeDetailView = '')">
+            back
+          </button>
+          <component
+            :is="detailView[activeDetailView]"
+            v-bind="detailsViewProps" />
+        </template>
+      </div>
     </div>
 
     <div class="flex flex-col sm:flex-row gap-6">

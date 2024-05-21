@@ -49,8 +49,8 @@ const inputStyles = computed(() => {
     `focus:outline-none`,
     `text-center`,
     `text-gray-300`,
-    `bg-transparent`,
-    `rounded-sm`
+    `focus:placeholder-gray-100`,
+    `bg-slate-600/50`,
   ]
 
   if (['number', 'timer'].includes(type)) {
@@ -81,6 +81,7 @@ const inputProps = computed(() => {
         min: '0',
         max: '59'
       })
+      break
     case 'timer':
       Object.assign(attrs, {
         type: 'number',

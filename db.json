@@ -8,6 +8,7 @@
       "warmup": 1,
       "cooldown": 1,
       "warmupType": "mi",
+      "completed": true,
       "details": [
         {
           "reps": 6,
@@ -33,12 +34,13 @@
     },
     {
       "id": 2,
-      "date": "May 9 2024",
+      "date": "May 21 2024",
       "name": null,
       "type": "run",
       "warmup": 0,
       "cooldown": 0,
       "warmupType": "",
+      "completed": false,
       "details": [
         {
           "reps": null,
@@ -54,22 +56,53 @@
     },
     {
       "id": 3,
-      "date": "May 8 2024",
-      "name": null,
+      "date": "May 22 2024",
+      "name": "Dante's Inferno",
       "warmup": 1,
       "cooldown": 1,
       "warmupType": "mi",
-      "type": "run",
+      "type": "threshold",
+      "completed": false,
       "details": [
         {
-          "reps": null,
-          "distance": 5,
-          "length": "mi",
-          "pace": null,
-          "paceType": null,
+          "reps": 1,
+          "distance": 1200,
+          "length": "m",
+          "pace": "3:30",
+          "paceType": "m",
+          "rest": 1.5,
+          "restType": "min",
+          "actual": null
+        },
+        {
+          "reps": 1,
+          "distance": 800,
+          "length": "m",
+          "pace": "2:25",
+          "paceType": "m",
+          "rest": 1.5,
+          "restType": "min",
+          "actual": null
+        },
+        {
+          "reps": 1,
+          "distance": 400,
+          "length": "m",
+          "pace": "65",
+          "paceType": "sec",
+          "rest": 1.5,
+          "restType": "min",
+          "actual": null
+        },
+        {
+          "reps": 1,
+          "distance": 200,
+          "length": "m",
+          "pace": "28",
+          "paceType": "sec",
           "rest": null,
           "restType": null,
-          "actual": 35
+          "actual": null
         }
       ]
     }

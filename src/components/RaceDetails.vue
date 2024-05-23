@@ -9,8 +9,6 @@ import Avatar from './Avatar.vue'
 
 const raceStore = useRaceStore()
 const { currentRace } = storeToRefs(raceStore)
-
-const { results } = ref(currentRace)
 </script>
 
 <template>
@@ -35,7 +33,9 @@ const { results } = ref(currentRace)
 
       <DetailsSection heading="Racing">
         <div class="flex gap-1">
-          <Avatar v-for="n of 6" />
+          <Avatar
+            v-for="n of 6"
+            :key="n" />
         </div>
       </DetailsSection>
       <DetailsSection heading="Results">

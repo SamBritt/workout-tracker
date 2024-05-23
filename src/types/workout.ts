@@ -1,4 +1,4 @@
-export interface Workout extends WorkoutInfo{
+export interface Workout extends WorkoutInfo {
   id: number
   name: string
   type: string

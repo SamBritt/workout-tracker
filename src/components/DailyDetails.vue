@@ -2,10 +2,23 @@
 import type { WorkoutScheduled } from '@/types/workout'
 import VButton from './VButton.vue'
 import SplitItem from './SplitItem.vue'
+import { ref, watch } from 'vue'
 
-defineProps<{
+const { workout } = defineProps<{
   workout: WorkoutScheduled
 }>()
+
+const showEditButtons = ref(false)
+const toggleEditButtons = () => {
+  showEditButtons.value = !showEditButtons.value
+}
+
+watch(
+  () => workout,
+  () => {
+    showEditButtons.value = false
+  }
+)
 </script>
 
 <template>
@@ -25,7 +38,8 @@ defineProps<{
 
       <p
         class="text-sky-300 hover:cursor-pointer hover:text-sky-200"
-        role="button">
+        role="button"
+        @click="toggleEditButtons()">
         Edit
       </p>
     </div>
@@ -36,7 +50,7 @@ defineProps<{
         workout.completed ? 'flex-row' : 'flex-col'
       ]"
       v-if="workout.details">
-      <div class="flex justify-evenly items-center w-full">
+      <div class="flex justify-evenly items-center w-full h-full">
         <div>
           <span v-if="workout.warmup">{{ workout.warmup }}{{ workout.warmupType }} warmup</span>
 
@@ -59,9 +73,11 @@ defineProps<{
         </div>
       </div>
 
-      <div class="flex">
-        <VButton>Undo</VButton>
-        <VButton>Undo</VButton>
+      <div
+        class="flex"
+        v-if="showEditButtons">
+        <VButton v-if="workout.completed">Undo</VButton>
+        <VButton v-if="!workout.completed">Complete</VButton>
       </div>
     </div>
 

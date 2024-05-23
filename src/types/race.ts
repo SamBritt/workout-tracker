@@ -1,4 +1,4 @@
-import { Athlete } from './athlete'
+import type { Athlete } from './athlete'
 
 export interface Race {
   id: string
@@ -25,5 +25,8 @@ export interface RaceResults {
 
 export interface Results {
   athlete: Athlete
+  event: RaceType
   time: string
 }
+
+export type RaceType = '100m' | '200m' | '400m' | '800m' | '1500m' | '1600m' | 'mile' | '3k' | '3200m' | '2mi' | '5k' | '8k' | '10k' | 'half' | 'marathon'

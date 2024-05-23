@@ -1,4 +1,56 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "teamId": 1,
+      "firstName": "Sam",
+      "lastName": "Britt",
+      "email": "sam.britt2@yahoo.com",
+      "phone": "6157191123",
+      "accountType": "superCoach",
+      "tier": "plus",
+      "address": {
+        "streetOne": "123 Test Way",
+        "streetTwo": "2",
+        "city": "Nashville",
+        "state": "TN",
+        "zip": 37212
+      }
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Hillsboro HS"
+    }
+  ],
+  "races": [
+    {
+      "id": 1,
+      "title": "Nike Grand Prix",
+      "subTitle": "XC Regionals",
+      "date": "May, 8th, 2024",
+      "start": "4:30pm",
+      "end": "8:30pm",
+      "location": {
+        "address": "2351 Nike Ln",
+        "zip": "37092"
+      }
+    },
+    {
+      "id": 2,
+      "title": "All-State Championship",
+      "subTitle": "",
+      "date": "May, 30th, 2024",
+      "start": "4:00pm",
+      "end": "8:00pm",
+      "location": {
+        "address": "2898 Steeplechase Ln.",
+        "zip": "37342"
+      }
+    }
+  ],
   "workouts": [
     {
       "id": 1,
@@ -34,7 +86,7 @@
     },
     {
       "id": 2,
-      "date": "May 21 2024",
+      "date": "May 22 2024",
       "name": null,
       "type": "run",
       "warmup": 0,

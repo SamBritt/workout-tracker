@@ -14,26 +14,20 @@ const fullName = computed(() => {
 </script>
 
 <template>
-  <tr
-    class="items-center bg-slate-700 p-2 hover:bg-slate-700/60 hover:cursor-pointer">
-    <td class="">
+  <section class="flex items-center justify-between bg-slate-700 p-4 hover:bg-slate-700/60 hover:cursor-pointer rounded gap-2 w-56 h-24">
+    <div class="">
       <Avatar
         :first="athlete.firstName"
         :last="athlete.lastName" />
-    </td>
+    </div>
 
-    <td class="">
-      <p class="font-medium text-slate-300">{{ fullName }}</p>
-    </td>
-
-    <td class="">
+    <div class="">
+      <p class="font-medium text-slate-300 text-xl">{{ fullName }}</p>
       <p class="font-medium text-slate-300">{{ athlete.class }}</p>
-    </td>
 
-    <td class="">
-      <p class="font-medium text-slate-300">{{ athlete.weeklyMileage }}</p>
-    </td>
-  </tr>
+    </div>
+    <p class="font-medium text-slate-300 text-3xl">{{ athlete.weeklyMileage }}</p>
+  </section>
 </template>
 
 <style></style>

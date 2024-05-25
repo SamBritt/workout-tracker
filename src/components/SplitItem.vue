@@ -25,7 +25,7 @@ const { hideRest = false, element = 'li' } = defineProps<{
 
       <span>{{ split.length }}</span>
 
-      <span class="text-xs text-slate-400">&nbsp;@&nbsp;</span>
+      <span v-if="split.pace" class="text-xs text-slate-400">&nbsp;@&nbsp;</span>
 
       <span>{{ split.pace }}{{ split.paceType }}</span>
     </div>

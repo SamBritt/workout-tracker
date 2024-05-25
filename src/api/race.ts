@@ -1,13 +1,12 @@
 import type { Race } from '@/types/race'
-import axios from 'axios'
+import axios, { type AxiosPromise, type AxiosResponse } from 'axios'
 
-export const getRaces = () => {
+export const getRaces = (): Promise<Race[]> => {
   return axios({
     url: `http://localhost:3000/races`,
     method: 'get'
   })
     .then((res) => {
-      console.log(res)
       return res.data
     })
     .catch((e) => console.log(e))

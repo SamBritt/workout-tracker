@@ -1,7 +1,7 @@
 import type { Workout } from '@/types/workout'
-import axios from 'axios'
+import axios, { type AxiosPromise, type AxiosResponse } from 'axios'
 
-export const getWorkouts = () => {
+export const getWorkouts = (): Promise<Workout[]> => {
   console.log('get workouts')
 
   return axios({

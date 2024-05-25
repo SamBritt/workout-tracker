@@ -11,21 +11,25 @@ import { Line } from 'vue-chartjs'
 import { useWorkoutStore } from '@/stores/WorkoutStore'
 import 'chart.js/auto'
 import { storeToRefs } from 'pinia'
-import type { Workout } from '@/types/workout'
+import type { ScheduleItem, Workout } from '@/types/workout'
 import { useUserStore } from '@/stores/UserStore'
 import Avatar from '@/components/Avatar.vue'
+import { useScheduleStore } from '@/stores/ScheduleStore'
 // ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const currentDate = ref(new Date())
 const activeDetailView = ref('')
+
 const workoutStore = useWorkoutStore()
+const scheduleStore = useScheduleStore()
 const userStore = useUserStore()
+
 const { firstName, lastName } = storeToRefs(userStore)
-const { workouts, weeklyWorkouts, currentWorkout, weeklyMileage, daysOff, loadingWorkouts } =
-  storeToRefs(workoutStore)
+const { weeklyMileage } = storeToRefs(workoutStore)
+const { weeklySchedule, currentSchedule, daysOff, loadingSchedule } = storeToRefs(scheduleStore)
 
 onBeforeMount(() => {
-  workoutStore.fetchWorkouts()
+  scheduleStore.fetchSchedule()
 })
 
 const year = computed(() => currentDate.value.getFullYear())
@@ -98,12 +102,12 @@ const chartStyles = computed(() => {
 
 const detailsViewProps = computed(() => {
   return {
-    workout: currentWorkout.value
+    workout: currentSchedule.value
   }
 })
 
-const selectWorkout = (workout: Workout) => {
-  workoutStore.setCurrentWorkout(workout)
+const selectSchedule = (item: ScheduleItem) => {
+  scheduleStore.setCurrentSchedule(item)
 }
 
 const detailView = {
@@ -177,14 +181,14 @@ const detailView = {
     </div>
 
     <WeeklyReport
-      @select="selectWorkout"
-      :workouts="weeklyWorkouts" />
+      @select="selectSchedule"
+      :schedule="weeklySchedule" />
 
     <div class="flex flex-col sm:flex-row">
       <!-- <QuickRun @save="addRun" /> -->
       <DailyDetails
-        v-if="!loadingWorkouts"
-        :workout="currentWorkout" />
+        v-if="!loadingSchedule"
+        :workout="currentSchedule" />
 
       <div
         class="flex flex-col bg-slate-700/20 rounded-r-md text-slate-200 order-2 sm:order-none w-32 hover:w-36 h-60 min-h-fit min-w-fit p-4 transition-all">
@@ -219,7 +223,7 @@ const detailView = {
 
     <div class="flex flex-col sm:flex-row gap-6">
       <Goals />
-      <RunList :list="workouts" />
+      <!-- <RunList :list="workouts" /> -->
     </div>
   </div>
 </template>

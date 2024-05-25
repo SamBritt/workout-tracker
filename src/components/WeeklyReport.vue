@@ -2,16 +2,18 @@
 import { computed, onBeforeMount, reactive, ref } from 'vue'
 import Heading from '@/components/Heading.vue'
 import ReportTile from '@/components/ReportTile.vue'
-import type { Workout, WorkoutScheduled } from '@/types/workout'
+import type { Schedule, ScheduleItem, Workout } from '@/types/workout'
 import { useWorkoutStore } from '@/stores/WorkoutStore'
 import { storeToRefs } from 'pinia'
+import { useScheduleStore } from '@/stores/ScheduleStore'
 
 defineProps<{
-  workouts: WorkoutScheduled[]
+  schedule: Array<ScheduleItem>
 }>()
 
-const store = useWorkoutStore()
-const { currentWorkout } = storeToRefs(store)
+const store = useScheduleStore()
+// const { currentWorkout } = storeToRefs(store)
+const { currentSchedule } = storeToRefs(store)
 </script>
 
 <template>
@@ -20,11 +22,11 @@ const { currentWorkout } = storeToRefs(store)
 
     <div class="flex relative gap-1 overflow-hidden scroll h-24">
       <ReportTile
-        v-for="(workout, idx) in workouts"
+        v-for="(item, idx) in schedule"
         :key="`workout-${idx}`"
         @select="(workout) => $emit('select', workout)"
-        :current="currentWorkout.day === workout.day"
-        :workout="workout" />
+        :current="currentSchedule.day === item.day"
+        :workout="item" />
     </div>
   </div>
 </template>

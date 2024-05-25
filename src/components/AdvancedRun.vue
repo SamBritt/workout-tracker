@@ -7,14 +7,14 @@ import TextArea from '@/components/TextArea.vue'
 import Dropdown from './Dropdown.vue'
 import { reactive, ref } from 'vue'
 import SplitItem from './SplitItem.vue'
-import { WorkoutScheduled } from '@/types/workout'
+import { Workout } from '@/types/workout'
 
 interface Time {
   [key: string]: string | number
 }
 
 const { workout } = defineProps<{
-  workout: WorkoutScheduled
+  workout: Workout
 }>()
 
 const time: Time = reactive({

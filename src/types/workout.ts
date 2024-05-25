@@ -1,5 +1,7 @@
+import type { Race } from './race'
+
 export interface Workout extends WorkoutInfo {
-  id: number
+  id: string
   name: string
   type: string
   details: WorkoutDetail[]
@@ -29,10 +31,13 @@ export type ExcludedInfo = Omit<WorkoutInfo, 'day'>
 
 export type Day = string
 
-export type DayOff = { day: Day, details?: never, } & {
-  [K in Exclude<keyof ExcludedInfo, 'day'>]: never;
-};
+export type DayOff = { day: Day; details?: never } & {
+  [K in Exclude<keyof ExcludedInfo, 'day'>]: never
+}
 
-export type WorkoutScheduled = Workout | DayOff
-
-export type Schedule = Array<WorkoutScheduled>
+// export type WorkoutScheduled = Workout | Race
+export interface ScheduleItem {
+  day: string
+  data?: Workout
+}
+export type Schedule = Array<ScheduleItem>

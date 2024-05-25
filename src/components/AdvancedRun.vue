@@ -7,14 +7,14 @@ import TextArea from '@/components/TextArea.vue'
 import Dropdown from './Dropdown.vue'
 import { reactive, ref } from 'vue'
 import SplitItem from './SplitItem.vue'
-import { Workout } from '@/types/workout'
+import { ScheduleItem, Workout } from '@/types/workout'
 
 interface Time {
   [key: string]: string | number
 }
 
 const { workout } = defineProps<{
-  workout: Workout
+  workout: ScheduleItem
 }>()
 
 const time: Time = reactive({
@@ -153,7 +153,7 @@ const distance = ref(0)
 
       <ul class="flex flex-col h-full gap-2">
         <li
-          v-for="(split, idx) in workout.details"
+          v-for="(split, idx) in workout.data?.details"
           :key="`split-${idx}`"
           class="flex items-center justify-start bg-slate-600 h-6 w-full rounded-md p-2">
           <SplitItem :split="split" element="span" hideRest/>

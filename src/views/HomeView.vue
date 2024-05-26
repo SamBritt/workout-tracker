@@ -186,9 +186,7 @@ const detailView = {
 
     <div class="flex flex-col sm:flex-row">
       <!-- <QuickRun @save="addRun" /> -->
-      <DailyDetails
-        v-if="!loadingSchedule"
-        :workout="currentSchedule" />
+      <DailyDetails v-if="!loadingSchedule" />
 
       <div
         class="flex flex-col bg-slate-700/20 rounded-r-md text-slate-200 order-2 sm:order-none w-32 hover:w-36 h-60 min-h-fit min-w-fit p-4 transition-all">
